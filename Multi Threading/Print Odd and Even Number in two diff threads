@@ -1,0 +1,64 @@
+#include <stdio.h>
+#include <pthread.h>
+
+pthread_mutex_t countLock;
+pthread_cond_t condVar;
+int count = 0;
+
+void* thread1(void* arg);
+void* thread2(void* arg);
+
+int main()
+{
+    printf("Hello World");
+    pthread_t pid0;
+    pthread_t pid1;
+    pthread_create(&pid0, NULL, thread1, NULL);
+    pthread_create(&pid1, NULL, thread2, NULL);
+    pthread_join(pid0, NULL);
+    pthread_join(pid1, NULL);
+    return 0;
+}
+
+void* thread1(void* arg)
+{
+    for(;;)
+    {
+        pthread_mutex_lock(&countLock);
+        if(count%2 != 0)
+        {
+            pthread_cond_wait(&condVar, &countLock);
+        }
+        count++;
+        printf("\n\r count Val : %d",count);
+        pthread_cond_signal(&condVar);
+        if(count >= 99)
+        {
+            pthread_mutex_unlock(&countLock);
+            pthread_exit(NULL);
+        }
+        pthread_mutex_unlock(&countLock);
+    }
+}
+
+void* thread2(void* arg)
+{
+    for(;;)
+    {
+        pthread_mutex_lock(&countLock);
+        if(count%2 == 0)
+        {
+            pthread_cond_wait(&condVar, &countLock);
+        }
+        count++;
+        printf("\n\r count Val : %d",count);
+        pthread_cond_signal(&condVar);
+        if(count >= 99)
+        {
+            pthread_mutex_unlock(&countLock);
+            pthread_exit(NULL);
+        }
+        pthread_mutex_unlock(&countLock);
+    }
+}
+
