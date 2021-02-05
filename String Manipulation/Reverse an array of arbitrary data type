@@ -1,0 +1,47 @@
+/******************************************************************************
+
+                            Online C Compiler.
+                Code, Compile, Run and Debug C program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <stdio.h>
+
+void revFun(void* arrayPtr, size_t sizeOfEle, size_t sizeOfArray);
+
+int main()
+{
+    printf("Hello World");
+    int myArray[5] = {1, 2, 3, 4, 5};
+    int i;
+    for(i = 0; i<5; i++)
+    {
+        printf("\n\r myArray : %d",myArray[i]);
+    }
+    revFun(&myArray[0], sizeof(int), 5);
+    printf("\n\r After Reversing...");
+    for(i = 0; i<5; i++)
+    {
+        printf("\n\r myArray : %d",myArray[i]);
+    }
+    return 0;
+}
+
+void revFun(void* arrayPtr, size_t sizeOfEle, size_t sizeOfArray)
+{
+    void* endPtr = arrayPtr + sizeOfArray*sizeOfEle - sizeOfEle;
+    void* temp = (int *)malloc(sizeOfEle);
+    
+    while(arrayPtr < endPtr)
+    {
+        memcpy(temp, arrayPtr, sizeOfEle);
+        memcpy(arrayPtr, endPtr, sizeOfEle);
+        memcpy(endPtr, temp, sizeOfEle);
+        
+        arrayPtr+=sizeOfEle;
+        endPtr-=sizeOfEle;
+    }
+    free(temp);
+    temp = NULL;
+}
