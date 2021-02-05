@@ -1,0 +1,36 @@
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int findStrLen(char* str);
+
+int main()
+{
+    char myArray[20] = "Bhargav";
+    printf("Before Shuffling : %s",myArray);
+    int index, randomIndex;
+    int strLen = 0;
+    strLen = findStrLen(&myArray[0]);
+    printf("\n\r strlen : %d",strLen);
+    char temp;
+    for(index = 0; index<strLen; index++)
+    {
+        randomIndex = rand()%strLen;
+        temp = myArray[randomIndex];
+        myArray[randomIndex] = myArray[index];
+        myArray[index] = temp;
+    }
+    printf("\n\r After Shuffling :: %s",myArray);
+    return 0;
+}
+
+int findStrLen(char* str)
+{
+    int count = 0;
+    while(*str != NULL)
+    {
+        count++;
+        str++;
+    }
+    return count;
+}
