@@ -1,0 +1,67 @@
+#include <stdio.h>
+
+char* findDlimiter(char* str, char dilimiter);
+void revString(char* startOfStr, char* endOfStr);
+char* findLPtr(char* str);
+
+int main()
+{
+    printf("Hello World");
+    char myArray[30] = "I am a Human Being";
+
+    char* strPtr = &myArray[0];
+    char* tempPtr = strPtr;
+    char* retVal;
+    while(*strPtr != NULL)
+    {
+        retVal = findDlimiter(strPtr,' ');
+        if(retVal != NULL)
+        {
+            revString(strPtr, retVal);
+            strPtr = retVal + 1;
+        }
+        else
+        {
+            revString(strPtr, retVal);
+            break;
+        }
+    }
+    printf("\n\r After Swapping Str :%s",tempPtr);
+    return 0;
+}
+
+/* reverses a string given between the pointers */
+void revString(char* startOfStr, char* endOfStr)
+{
+    char temp;
+    char* lPtr = endOfStr - 1;
+    while(startOfStr < lPtr)
+    {
+        temp = *startOfStr;
+        *startOfStr = *lPtr;
+        *lPtr = temp;
+        
+        startOfStr++;
+        lPtr--;
+    }
+}
+
+/* finds delimiter and returns pointer to that character (delimmiter) in the string */ 
+char* findDlimiter(char* str, char dilimiter)
+{
+    while((*str != dilimiter) && (*str != NULL))
+    {
+        str++;
+    }
+    return str;
+}
+
+/* returns the last pointer (NULL) of the given string */
+char* findLPtr(char* str)
+{
+    while(*str != NULL)
+    {
+        str++;
+    }
+    return str;
+}
