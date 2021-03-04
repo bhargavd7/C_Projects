@@ -49,6 +49,8 @@ int* circularArrayRotation(int a_count, int* a, int k, int queries_count, int* q
         qArray[i] = resultArray[queries[i]];
     }
     *result_count = queries_count;
+    free(resultArray);
+    resultArray = NULL;
     return qArray;
 }
 
