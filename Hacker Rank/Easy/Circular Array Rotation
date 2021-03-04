@@ -40,7 +40,7 @@ int* rotateRight(int* ptr, int size, int n)
 
 int* circularArrayRotation(int a_count, int* a, int k, int queries_count, int* queries, int* result_count) {
     int offset = k%a_count;
-    int* resultArray = (int*)malloc(sizeof(int)*a_count);
+    int* resultArray;
     resultArray = rotateRight(a, a_count, offset);
     int* qArray = (int*)malloc(sizeof(int)*queries_count);
     int i;
@@ -49,8 +49,6 @@ int* circularArrayRotation(int a_count, int* a, int k, int queries_count, int* q
         qArray[i] = resultArray[queries[i]];
     }
     *result_count = queries_count;
-    free(resultArray);
-    resultArray = NULL;
     return qArray;
 }
 
